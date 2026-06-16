@@ -38,8 +38,13 @@ export function TaskProvider({ children }) {
     setTasks(prev => prev.filter(t => t.id !== id))
   }, [])
 
+  const clearCompleted = useCallback(async () => {
+    const remaining = await taskService.clearCompleted()
+    setTasks(remaining)
+  }, [])
+
   return (
-    <TaskContext.Provider value={{ tasks, loading, error, fetchTasks, addTask, updateTask, removeTask }}>
+    <TaskContext.Provider value={{ tasks, loading, error, fetchTasks, addTask, updateTask, removeTask, clearCompleted }}>
       {children}
     </TaskContext.Provider>
   )
